@@ -1,0 +1,20 @@
+# Ignore everything by default
+/*
+
+# But keep the gitignore file itself
+!.gitignore
+
+# Keep README at repo root
+!README.md
+
+# Keep the main package directory and all its contents
+!/unitypackage_opener/
+!/unitypackage_opener/**
+
+# Keep resource directory and all its contents
+!/resource/
+!/resource/**
+
+# (Optional) allow windows thumbnail cache and others if needed
+# You can add more allowed paths above as needed.
+

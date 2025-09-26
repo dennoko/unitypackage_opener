@@ -1,0 +1,1 @@
+Place your icon file here as icon.ico. It will be used for the PyInstaller build via --icon resource/icon.ico
