@@ -137,19 +137,25 @@ def main():
         df.write("[DEBUG] sys.argv: " + repr(sys.argv) + "\n")
         df.write("[DEBUG] raw args: " + repr(args) + "\n")
     headless_flag = False
-    normalized = []
+    file_candidates = []
     for a in args:
-        # if args have --headless, set headless_flag
         if a == "--headless":
             headless_flag = True
             continue
-        # args have spaces, keep them as is
         if a.strip():
-            normalized.append(a)
+            file_candidates.append(a)
+    # ログ: 受け取ったファイル候補一覧
     with open(os.path.join(SETTINGS_DIR, "debug_headless.log"), "a", encoding="utf-8") as df:
-        df.write("[DEBUG] normalized args: " + repr(normalized) + "\n")
-    args = normalized
-    passed = [arg for arg in args if arg.lower().endswith('.unitypackage') and os.path.exists(arg)]
+        df.write("[DEBUG] file_candidates: " + repr(file_candidates) + "\n")
+    # .unitypackage拡張子で存在するファイルのみ抽出
+    passed = []
+    for arg in file_candidates:
+        exists = os.path.exists(arg)
+        is_unitypackage = arg.lower().endswith('.unitypackage')
+        with open(os.path.join(SETTINGS_DIR, "debug_headless.log"), "a", encoding="utf-8") as df:
+            df.write(f"[DEBUG] arg: {arg} | exists: {exists} | unitypackage: {is_unitypackage}\n")
+        if is_unitypackage and exists:
+            passed.append(arg)
     with open(os.path.join(SETTINGS_DIR, "debug_headless.log"), "a", encoding="utf-8") as df:
         df.write("[DEBUG] passed_detected: " + repr(passed) + "\n")
 
