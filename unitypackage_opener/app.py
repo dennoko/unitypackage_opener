@@ -122,8 +122,6 @@ class App(ctk.CTk):
         save_settings(self.app_settings)
         messagebox.showinfo(APP_NAME, "設定を保存しました。")
 
-    # GUIからの解凍実行機能はオミットしました
-
 
 def main():
     args = sys.argv[1:]
@@ -133,9 +131,11 @@ def main():
     headless_flag = False
     normalized = []
     for a in args:
+        # if args have --headless, set headless_flag
         if a == "--headless":
             headless_flag = True
             continue
+        # args have spaces, keep them as is
         if a.strip():
             normalized.append(a)
     with open(os.path.join(SETTINGS_DIR, "debug_headless.log"), "a", encoding="utf-8") as df:
@@ -146,7 +146,6 @@ def main():
         df.write("[DEBUG] passed_detected: " + repr(passed) + "\n")
 
     if headless_flag or passed:
-        settings = ensure_registered() or {}
         app_settings = load_settings()
 
         os.makedirs(SETTINGS_DIR, exist_ok=True)
