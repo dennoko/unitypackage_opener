@@ -65,7 +65,7 @@ def register_context_menu(exe_path: Optional[str] = None):
             pass
     with winreg.CreateKey(winreg.HKEY_CURRENT_USER, COMMAND_KEY) as key:
         # Always launch with --headless for context menu
-        command = f'"{exe_path}" --headless %*'
+        command = f'"{exe_path}" --headless %1'
         winreg.SetValueEx(key, None, 0, winreg.REG_SZ, command)
 
 
