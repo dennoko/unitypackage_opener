@@ -125,7 +125,15 @@ class App(ctk.CTk):
 
 def main():
     args = sys.argv[1:]
-    with open(os.path.join(SETTINGS_DIR, "debug_headless.log"), "a", encoding="utf-8") as df:
+    # Clear debug log at every launch
+    debug_log_path = os.path.join(SETTINGS_DIR, "debug_headless.log")
+    try:
+        os.makedirs(SETTINGS_DIR, exist_ok=True)
+        with open(debug_log_path, "w", encoding="utf-8") as df:
+            df.write("")
+    except Exception:
+        pass
+    with open(debug_log_path, "a", encoding="utf-8") as df:
         df.write("[DEBUG] sys.argv: " + repr(sys.argv) + "\n")
         df.write("[DEBUG] raw args: " + repr(args) + "\n")
     headless_flag = False
